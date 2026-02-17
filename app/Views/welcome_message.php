@@ -311,7 +311,7 @@
     </div>
 
 </footer>
-
+                
 <!-- SCRIPTS -->
 
 <script {csp-script-nonce}>
