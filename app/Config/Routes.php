@@ -8,3 +8,5 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 $routes->get('/verificacion', 'Verificacion::index');
+
+$routes->post('/verificacion/validar', 'Verificacion::validar');

@@ -28,7 +28,12 @@
 <div class="contenedor">
     <h2>Autenticación biométrica</h2>
 
-    <video id="video" autoplay playsinline></video>
+    <div style="position:relative; width:100%; max-width:420px; margin:auto;">
+        <video id="video" autoplay playsinline style="width:100%;"></video>
+        <canvas id="overlay"
+            style="position:absolute; top:0; left:0;">
+        </canvas>
+    </div>
 
     <button id="btnAbrirCamara">
         Abrir cámara
@@ -37,6 +42,18 @@
     <canvas id="canvas" style="display:none;"></canvas>
 </div>
 
+<div id="estado" style="margin-top:10px;font-weight:bold;">
+Esperando inicio…
+</div>
+
+<div id="reto" style="margin-top:6px;">
+Reto: ninguno
+</div>
+
+<canvas id="overlay"></canvas>
+
+<script src="/js/face-api.min.js"></script>
 <script src="/js/camara.js"></script>
+
 </body>
 </html>

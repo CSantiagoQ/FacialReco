@@ -161,7 +161,7 @@ class App extends BaseConfig
      * and the HTTP Strict Transport Security (HSTS) header will be set.
      */
 
-    //Cambio a TRUE para certificado local
+    // Cambio a TRUE para certificado local
     public bool $forceGlobalSecureRequests = true;
 
     /**
