@@ -28,11 +28,19 @@
 <div class="contenedor">
     <h2>Autenticación biométrica</h2>
 
-    <div style="position:relative; width:100%; max-width:420px; margin:auto;">
-        <video id="video" autoplay playsinline style="width:100%;"></video>
+    <div id="contenedorCamara"
+        style="position:relative; width:360px; margin:auto;">
+
+        <video id="video"
+            autoplay
+            playsinline
+            style="width:100%; display:block;">
+        </video>
+
         <canvas id="overlay"
             style="position:absolute; top:0; left:0;">
         </canvas>
+
     </div>
 
     <button id="btnAbrirCamara">

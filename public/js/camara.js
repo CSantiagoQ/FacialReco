@@ -68,21 +68,32 @@ async function cargarModelos() {
     await faceapi.nets.faceLandmark68Net.loadFromUri(URL);
 }
 
-function iniciarEvaluacion() {
-
-    const opciones = new faceapi.TinyFaceDetectorOptions();
+function configurarOverlay() {
 
     const canvas = document.getElementById("overlay");
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    const width = video.videoWidth;
+    const height = video.videoHeight;
+
+    canvas.width = width;
+    canvas.height = height;
 
     canvas.style.width = video.clientWidth + "px";
     canvas.style.height = video.clientHeight + "px";
 
+    return canvas;
+}
+
+
+function iniciarEvaluacion() {
+
+    const opciones = new faceapi.TinyFaceDetectorOptions();
+
+    const canvas = configurarOverlay();
+
     const displaySize = {
-        width: video.videoWidth,
-        height: video.videoHeight
+        width: video.clientWidth,
+        height: video.clientHeight
     };
 
     faceapi.matchDimensions(canvas, displaySize);
@@ -110,7 +121,6 @@ function iniciarEvaluacion() {
         const resized = faceapi.resizeResults(deteccion, displaySize);
         faceapi.draw.drawDetections(canvas, resized);
         faceapi.draw.drawFaceLandmarks(canvas, resized);
-
 
         evaluarReto(deteccion);
 
@@ -141,7 +151,6 @@ function evaluarReto(deteccion) {
         framesValidos = 0;
     }
 }
-
 
 function detectarParpadeo(landmarks) {
     const eye = landmarks.getLeftEye();
