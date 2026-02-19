@@ -21,8 +21,13 @@
             padding: 12px 16px;
             font-size: 16px;
         }
+         #video, #overlay {
+            object-fit: cover;
+        }
+
     </style>
 </head>
+
 <body>
 
 <div class="contenedor">
@@ -34,7 +39,7 @@
         <video id="video"
             autoplay
             playsinline
-            style="width:100%; display:block;">
+            style="width:100%; display:block; transform: scaleX(-1);">
         </video>
 
         <canvas id="overlay"
@@ -48,6 +53,7 @@
     </button>
 
     <canvas id="canvas" style="display:none;"></canvas>
+
 </div>
 
 <div id="estado" style="margin-top:10px;font-weight:bold;">

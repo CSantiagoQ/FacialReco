@@ -41,5 +41,4 @@ class Verificacion extends BaseController
     return sqrt($suma);
 } */
 
-
 }

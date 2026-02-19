@@ -7,6 +7,7 @@ const overlay = document.getElementById("overlay");
 let retoActual = 0;
 let secuenciaSuperada = false;
 let framesValidos = 0;
+let contadorParpadeo = 0;
 
 const RETOS = [
     "parpadea",
@@ -80,10 +81,10 @@ function configurarOverlay() {
 
     canvas.style.width = video.clientWidth + "px";
     canvas.style.height = video.clientHeight + "px";
+    canvas.style.transform = "scaleX(-1)";
 
     return canvas;
 }
-
 
 function iniciarEvaluacion() {
 
@@ -135,33 +136,56 @@ function evaluarReto(deteccion) {
 
     let cumplido = false;
 
-    if (reto === "parpadea") cumplido = detectarParpadeo(landmarks);
-    if (reto === "gira_izquierda") cumplido = girarIzquierda(landmarks);
-    if (reto === "gira_derecha") cumplido = girarDerecha(landmarks);
-    if (reto === "acercate") cumplido = acercarse(deteccion);
+    if (reto === "parpadea") {
 
-    if (cumplido) {
-        framesValidos++;
+    if (detectarParpadeo(landmarks)) {
+        contadorParpadeo++;
     } else {
-        framesValidos = 0;
+        contadorParpadeo = 0;
     }
 
-    if (framesValidos > 3) {
+    if (contadorParpadeo >= 2) {
         avanzar();
-        framesValidos = 0;
+        contadorParpadeo = 0;
     }
+
+    return;
+    }
+
+    // if (reto === "gira_izquierda") cumplido = girarIzquierda(landmarks);
+    // if (reto === "gira_derecha") cumplido = girarDerecha(landmarks);
+    // if (reto === "acercate") cumplido = acercarse(deteccion);
+    // 
+    // if (cumplido) {
+    //     framesValidos++;
+    // } else {
+    //     framesValidos = 0;
+    // }
+    // 
+    // if (framesValidos > 3) {
+    //     avanzar();
+    //     framesValidos = 0;
+    // }
 }
 
 function detectarParpadeo(landmarks) {
-    const eye = landmarks.getLeftEye();
 
-    const vertical1 = distancia(eye[1], eye[5]);
-    const vertical2 = distancia(eye[2], eye[4]);
-    const horizontal = distancia(eye[0], eye[3]);
+    const leftEye = landmarks.getLeftEye();
+    const rightEye = landmarks.getRightEye();
 
-    const EAR = (vertical1 + vertical2) / (2.0 * horizontal);
+    const earLeft = calcularEAR(leftEye);
+    const earRight = calcularEAR(rightEye);
 
-    return EAR < 0.20;
+    const EAR = (earLeft + earRight) / 2.0;
+
+    return EAR < 0.23; // umbral realista en webcam
+}
+
+function calcularEAR(eye) {
+    const v1 = distancia(eye[1], eye[5]);
+    const v2 = distancia(eye[2], eye[4]);
+    const h = distancia(eye[0], eye[3]);
+    return (v1 + v2) / (2.0 * h);
 }
 
 function distancia(a, b) {
